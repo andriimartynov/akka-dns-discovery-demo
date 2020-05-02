@@ -1,0 +1,24 @@
+version: '3'
+services:
+  master:
+    image: "andriimartynov/akka-dns-discovery-demo-master:latest"
+    container_name: master
+    domainname: akka
+    hostname: master
+    environment:
+      - APPLICATION_SECRET=QCY?tAnfk?aZ?iwrNwnxIlR6CTf:G3gf:90Latabg@5241AB`R5W:1uDFN];Ik@n
+    networks:
+      default:
+        aliases:
+          - akka
+  slave:
+    image: "andriimartynov/akka-dns-discovery-demo-slave:latest"
+    container_name: slave
+    domainname: akka
+    hostname: slave
+    environment:
+      - APPLICATION_SECRET=QCYtAnfkaZiwrNwnxIlR6CTfG3gf90Latabg5241ABR5W1uDFNIkn
+    networks:
+      default:
+        aliases:
+          - akka
