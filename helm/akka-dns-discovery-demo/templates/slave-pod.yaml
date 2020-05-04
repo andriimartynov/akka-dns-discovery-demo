@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.pods.slave.name }}
+  labels:
+    name: {{ .Values.services.dns.selector.name }}
+spec:
+  volumes:
+    - name: {{ .Values.pods.slave.secret.name }}
+      secret:
+        secretName: {{ .Values.pods.slave.secret.name }}
+        items:
+          - key: prod.conf
+            path: {{ .Values.apps.conf.file }}
+  containers:
+    - name: slave
+      image: {{ template "pods.slave.image" . }}
+      command: [{{ .Values.pods.slave.command }}]
+      args: [{{ template "apps.jvm.args" . }}]
+      volumeMounts:
+        - name: {{ .Values.pods.slave.secret.name }}
+          readOnly: true
+          mountPath: {{ template "aps.mount.conf.prod" . }}
+          subPath: {{ .Values.apps.conf.file }}

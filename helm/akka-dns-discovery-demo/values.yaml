@@ -1,0 +1,37 @@
+apps:
+  conf:
+    path: /opt/docker/conf
+    file: prod.conf
+  jvm:
+    args:
+      - "-Dconfig.resource=prod.conf"
+      - "-J-Xms512M"
+      - "-J-Xmx512M"
+      - "-J-Xss1M"
+      - "-J-XX:+CMSClassUnloadingEnabled"
+pods:
+  master:
+    name: master
+    appVersion: 0.0.1
+    command: /opt/docker/bin/akka-dns-discovery-demo-master
+    repository: andriimartynov/akka-dns-discovery-demo-master
+    http:
+      secret: QCY?tAnfk?aZ?iwrNwnxIlR6CTf:G3gf:90Latabg@5241AB`R5W:1uDFN];Ik@n
+    secret:
+      name: master-secret
+      volumeName: master-secret-volume
+  slave:
+    name: slave
+    appVersion: 0.0.1
+    command: /opt/docker/bin/akka-dns-discovery-demo-slave
+    repository: andriimartynov/akka-dns-discovery-demo-slave
+    http:
+      secret: QCYtAnfkaZiwrNwnxIlR6CTfG3gf90Latabg5241ABR5W1uDFNIkn
+    secret:
+      name: slave-secret
+      volumeName: slave-secret-volume
+services:
+  dns:
+    name: akka
+    selector:
+      name: akka-dns

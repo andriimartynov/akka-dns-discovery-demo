@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.pods.master.name }}
+  labels:
+    name: {{ .Values.services.dns.selector.name }}
+spec:
+  volumes:
+    - name: {{ .Values.pods.master.secret.volumeName }}
+      secret:
+        secretName: {{ .Values.pods.master.secret.name }}
+        items:
+          - key: prod.conf
+            path: {{ .Values.apps.conf.file }}
+  containers:
+    - name: master
+      image: {{ template "pods.master.image" . }}
+      command: [{{ .Values.pods.master.command }}]
+      args: [{{ template "apps.jvm.args" . }}]
+      volumeMounts:
+        - name: {{ .Values.pods.master.secret.volumeName }}
+          readOnly: true
+          mountPath: {{ template "aps.mount.conf.prod" . }}
+          subPath: {{ .Values.apps.conf.file }}

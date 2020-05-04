@@ -7,3 +7,9 @@ This is an example SBT project showing how to create an Akka Cluster with dns [d
 ```
 docker-compose -f docker/docker-compose.yml up
 ```
+
+## Starting via [helm](https://helm.sh)
+
+```
+helm install akka-dns-discovery-demo helm/akka-dns-discovery-demo
+```

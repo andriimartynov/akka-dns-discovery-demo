@@ -1,0 +1,15 @@
+apiVersion: v2
+name: akka-dns-discovery-demo
+version: 0.0.1
+appVersion: 0.0.1
+description: This is an example SBT project showing how to create an Akka Cluster with dns discovery method
+type: application
+keywords:
+  - scala
+  - akka
+  - cluster
+  - dns
+maintainers:
+  - name: andriimartynov
+sources:
+  - https://github.com/andriimartynov/akka-dns-discovery-demo
